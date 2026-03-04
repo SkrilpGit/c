@@ -4,9 +4,11 @@ run:
 	gcc "hello_world.c" -o ./bin/hello_world
 	gcc "in_to_out_chars.c" -o ./bin/in_to_out_chars
 	gcc "deci_binary.c" -o ./bin/deci_binary
+	gcc "arrayList.c" -o ./bin/arrayList
 clean:
 	rm -rf ./bin/cel_to_fahr
 	rm -rf ./bin/fahrenheit_to_celsius
 	rm -rf ./bin/hello_world
 	rm -rf ./bin/in_to_out_chars
 	rm -rf ./bin/deci_binary
+	rm -rf ./bin/arrayList
