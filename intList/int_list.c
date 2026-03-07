@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 struct IntList {
     int *data;
@@ -9,159 +10,148 @@ struct IntList {
     size_t capacity;
 };
 
-/* ---------- Internal Helper ---------- */
+
+/* ---------- Internal Helpers ---------- */
 
 static bool int_list_resize(IntList *list, size_t new_capacity)
 {
-    (void)list;
-    (void)new_capacity;
-
-    /* TODO: Implement resize logic */
-    return false;
+    list->data = realloc(list->data,new_capacity*sizeof(list->data[0]));
+    list->capacity = new_capacity;
+    return true;
 }
 
+void printList(IntList *list, size_t size){
+    if (size == 0)
+        return;
+    printf("[ %d",list->data[0]);
+    for (int i = 1; i < size; i++)
+        printf(", %d", list->data[i]);
+    printf(" ]\n"); 
+}
 /* ---------- Creation / Destruction ---------- */
 
 IntList *int_list_create(size_t initial_capacity)
 {
-
-    /* TODO: Allocate list struct
-       TODO: Allocate backing array
-       TODO: Initialize size and capacity
-    */
-    IntList* reservoir = malloc(sizeof(IntList));
-    reservoir->data = malloc(sizeof(int)*initial_capacity);
-    (*reservoir).capacity = initial_capacity;
-    reservoir->capacity = initial_capacity;
+    IntList* list = malloc(sizeof(IntList));
+    list->data = malloc(sizeof(int)*initial_capacity);
+    (*list).capacity = initial_capacity;
+    list->capacity = initial_capacity;
+    list->size = 0;
     
-    return reservoir;
+    return list;
 }
 
 void int_list_destroy(IntList *list)
-{
-    (void)list;
-
-    /* TODO: Free backing array
-       TODO: Free list struct
-    */
+{ 
+    free(list->data);
+    free(list);
 }
 
 /* ---------- Capacity ---------- */
 
 size_t int_list_size(const IntList *list)
 {
-    (void)list;
-
-    /* TODO: Return current size */
-    return 0;
+    return list->size;
 }
 
 size_t int_list_capacity(const IntList *list)
 {
-    (void)list;
-
-    /* TODO: Return capacity */
-    return 0;
+    return list->capacity;
 }
 
 bool int_list_is_empty(const IntList *list)
 {
-    (void)list;
-
-    /* TODO: Return true if size == 0 */
-    return false;
+ 
+    return list->size == 0;
 }
 
 /* ---------- Element Access ---------- */
 
 bool int_list_get(const IntList *list, size_t index, int *out_value)
 {
-    (void)list;
-    (void)index;
-    (void)out_value;
+    if (index > list->size || list->size == 0)
+        return false;
 
-    /* TODO: Bounds check
-       TODO: Assign to out_value
-    */
+    *out_value = list->data[index];
 
-    return false;
+    return true;
 }
 
 bool int_list_set(IntList *list, size_t index, int value)
 {
-    (void)list;
-    (void)index;
-    (void)value;
+    if (index > list->size || list->size == 0)
+        return false;
+    list->data[index] = value;
 
-    /* TODO: Bounds check
-       TODO: Assign value
-    */
-
-    return false;
+    return true;
 }
 
 /* ---------- Modification ---------- */
 
 bool int_list_push_back(IntList *list, int value)
 {
-    (void)list;
-    (void)value;
+    if (list->size == list->capacity)
+        int_list_resize(list,list->capacity + 4);
 
-    /* TODO: Resize if needed
-       TODO: Append value
-       TODO: Increment size
-    */
+    list->data[list->size] = value;
+    list->size += 1;
 
-    return false;
+    return true;
 }
 
 bool int_list_pop_back(IntList *list, int *out_value)
 {
-    (void)list;
-    (void)out_value;
+    if (list->size == 0)
+        return false;
 
-    /* TODO: Check if empty
-       TODO: Decrement size
-       TODO: Optionally write to out_value
-    */
+    printf("size = %lu\n", list->size);
+    
+    //printList(list, list->size);
 
-    return false;
+    *out_value = list->data[list->size-1];
+    list->size -= 1;
+
+    return true;
 }
 
 bool int_list_insert(IntList *list, size_t index, int value)
-{
-    (void)list;
-    (void)index;
-    (void)value;
-
-    /* TODO: Validate index
-       TODO: Resize if needed
-       TODO: Shift elements right (memmove)
-       TODO: Insert value
-       TODO: Increment size
-    */
-
-    return false;
+{ 
+    if (index > list->size)
+        return false;
+    
+    if (list->size == list->capacity)
+        int_list_resize(list,list->capacity + 4);
+    
+    // offset by index, then convert to size in bytes
+    int size = (list->size - index) * sizeof(list->data[0]);
+    memmove(&list->data[index+1], list->data + index, size);
+     
+    list->data[index] = value; 
+    
+    list->size += 1;
+     
+    return true;
 }
 
 bool int_list_remove_at(IntList *list, size_t index, int *out_value)
 {
-    (void)list;
-    (void)index;
-    (void)out_value;
+    if (index > list->size || list->size == 0)
+        return false;
+    *out_value = list->data[index];
 
-    /* TODO: Validate index
-       TODO: Optionally write removed value
-       TODO: Shift elements left (memmove)
-       TODO: Decrement size
-    */
+    //printList(list, list->size);
+   
+    int size = (list->size - index) * sizeof(list->data[0]);
+    memmove(list->data + index, list->data + index + 1, size);
+    
+    //printList(list, list->size);
+ 
+    list->size -= 1;
 
-    return false;
+    return true;
 }
 
 void int_list_clear(IntList *list)
 {
-    (void)list;
-
-    /* TODO: Set size to 0 */
+    list->size = 0;
 }
