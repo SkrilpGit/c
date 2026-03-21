@@ -15,29 +15,25 @@ struct IntLinkedList {
 
 static Node *node_create(int value)
 {
+    // Allocate Node
     Node* node = malloc(sizeof(Node));
+    // Initialize value and next*
     node->next = malloc(sizeof(Node));
     node->value = value;
-
-    /* TODO: allocate node
-       TODO: initialize value and next pointer
-    */
 
     return node;
 }
 
 IntLinkedList *int_linked_list_create(void)
 {
+    // Allocate List
     IntLinkedList* list = malloc(sizeof(IntLinkedList)); 
+    // initialize head, tail, and size
     list->head = malloc(sizeof(Node));
     list->tail = malloc(sizeof(Node));
     list->size = 0;
 
-    /* TODO: allocate list
-       TODO: initialize head, tail, size
-    */
-
-    return NULL;
+    return list;
 }
 
 void int_linked_list_clear(IntLinkedList *list)
@@ -61,32 +57,30 @@ void int_linked_list_destroy(IntLinkedList *list)
 
 size_t int_linked_list_size(const IntLinkedList *list)
 {
-    (void)list;
-
-    /* TODO: return size */
-    return 0;
+    /* return size */
+    return list->size;
 }
 
 bool int_linked_list_is_empty(const IntLinkedList *list)
 {
-    (void)list;
-
-    /* TODO: return true if size == 0 */
-    return false;
+    /* return true if size == 0 */
+    return (list->size == 0);
 }
 
 bool int_linked_list_push_front(IntLinkedList *list, int value)
 {
-    (void)list;
-    (void)value;
-
-    /* TODO: create node
-       TODO: update head
-       TODO: update tail if list was empty
-       TODO: increment size
-    */
-
-    return false;
+    // Create node
+    Node* newNode = node_create(value);
+    newNode->next = list->head;
+    // Update Head
+    list->head = newNode;
+    // Update tail if list is empty
+    if (list->size == 0)
+        list->tail = newNode;
+    // increment size
+    list->size += 1;
+    
+    return true;
 }
 
 bool int_linked_list_push_back(IntLinkedList *list, int value)
