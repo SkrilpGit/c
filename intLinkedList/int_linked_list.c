@@ -15,17 +15,24 @@ struct IntLinkedList {
 
 static Node *node_create(int value)
 {
-    (void)value;
+    Node* node = malloc(sizeof(Node));
+    node->next = malloc(sizeof(Node));
+    node->value = value;
 
     /* TODO: allocate node
        TODO: initialize value and next pointer
     */
 
-    return NULL;
+    return node;
 }
 
 IntLinkedList *int_linked_list_create(void)
 {
+    IntLinkedList* list = malloc(sizeof(IntLinkedList)); 
+    list->head = malloc(sizeof(Node));
+    list->tail = malloc(sizeof(Node));
+    list->size = 0;
+
     /* TODO: allocate list
        TODO: initialize head, tail, size
     */
