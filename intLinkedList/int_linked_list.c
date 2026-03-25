@@ -1,5 +1,5 @@
 #include "int_linked_list.h"
-
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct Node {
@@ -132,16 +132,23 @@ bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
 
 bool int_linked_list_get(const IntLinkedList *list, size_t index, int *out_value)
 {
-    (void)list;
-    (void)index;
-    (void)out_value;
+    //printf("%lu %lu\n",index,list->size);
+    //bounds check
+    if (index > list->size-1 || list->size == 0)
+        return false;
+    else if (index < 0){
+        index = list->size - (index * -1);
+        if (index < 0)
+            return false;
+    }
+    //iterate through the list
+    Node* current = list->head;
+    for (int i = 0; i < index; i++)
+        current = current->next;
+    //assign value
+    *out_value = current->value;
 
-    /* TODO: bounds check
-       TODO: walk list to index
-       TODO: assign value
-    */
-
-    return false;
+    return true;
 }
 
 bool int_linked_list_insert(IntLinkedList *list, size_t index, int value)
