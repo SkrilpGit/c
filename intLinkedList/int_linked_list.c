@@ -85,8 +85,6 @@ bool int_linked_list_push_front(IntLinkedList *list, int value)
 
 bool int_linked_list_push_back(IntLinkedList *list, int value)
 {
-    (void)list;
-    (void)value;
     // create Node
     Node* newNode = node_create(value);
     // if list empty update head
@@ -104,18 +102,25 @@ bool int_linked_list_push_back(IntLinkedList *list, int value)
 
 bool int_linked_list_pop_front(IntLinkedList *list, int *out_value)
 {
-    (void)list;
-    (void)out_value;
+    // check empty
+    if (list->size == 0)
+        return false;
+    // store value of head
+    *out_value = list->head->value;
+    // if list won't be empty assign new head and free old
+    if (list->size > 1){
+        Node* temp = list->head;
+        list->head = list->head->next;
+        free(temp);
+    // if list will be empty free head and tail
+    } else {
+        free(list->head);
+        list->tail = NULL;
+    }
+    // decrement size
+    list->size -= 1;
 
-    /* TODO: check empty
-       TODO: store value
-       TODO: move head
-       TODO: update tail if list becomes empty
-       TODO: free node
-       TODO: decrement size
-    */
-
-    return false;
+    return true;
 }
 
 bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
