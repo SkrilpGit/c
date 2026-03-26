@@ -87,15 +87,19 @@ bool int_linked_list_push_back(IntLinkedList *list, int value)
 {
     (void)list;
     (void)value;
+    // create Node
+    Node* newNode = node_create(value);
+    // if list empty update head
+    if (list->size == 0)
+        list->head = newNode;
+    // otherwise link the old tail
+    else
+        list->tail->next = newNode;
+    // set new tail :)
+    list->tail = newNode;
+    list->size += 1;
 
-    /* TODO: create node
-       TODO: attach after tail
-       TODO: update head if empty
-       TODO: update tail
-       TODO: increment size
-    */
-
-    return false;
+    return true;
 }
 
 bool int_linked_list_pop_front(IntLinkedList *list, int *out_value)
