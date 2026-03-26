@@ -126,23 +126,35 @@ bool int_linked_list_pop_front(IntLinkedList *list, int *out_value)
 bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
 {
     (void)list;
+    
     (void)out_value;
+    // check if empty
     if (list->size == 0)
         return false;
-    Node* secondLast = list->head;
-    for (int i = 0; i < list->size-1; i++){
-        secondLast = secondLast->next;
-    printf("%lu, %lu \n", secondLast->value, list->tail->value);
+    // if list is 1 element, pop value and free Node
+    else if (list->size == 1){
+        *out_value = list->tail->value;
+        free(list->tail);
+        list->head = NULL;
+        list->size -= 1;
+        return true;
     }
-    /* TODO: handle empty
-       TODO: find last node
-       TODO: track previous node
-       TODO: update tail
-       TODO: free node
-       TODO: decrement size
-    */
+    // find the second last node
+    Node* secondLast = list->head;
+    //start at 1 to line up with size, -1 for second last index 
+    for (int i = 1; i < list->size-1; i++)
+        secondLast = secondLast->next;
+    //printf("%lu, %lu \n", secondLast->value, list->tail->value);
+    //pop value
+    *out_value = list->tail->value;
+    //assign new tail
+    list->tail = secondLast;
+    //free old tail
+    free(list->tail->next);
+    //decrement size
+    list->size -= 1;
 
-    return false;
+    return true;
 }
 
 bool int_linked_list_get(const IntLinkedList *list, size_t index, int *out_value)
