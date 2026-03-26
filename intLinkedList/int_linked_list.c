@@ -127,7 +127,13 @@ bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
 {
     (void)list;
     (void)out_value;
-
+    if (list->size == 0)
+        return false;
+    Node* secondLast = list->head;
+    for (int i = 0; i < list->size-1; i++){
+        secondLast = secondLast->next;
+    printf("%lu, %lu \n", secondLast->value, list->tail->value);
+    }
     /* TODO: handle empty
        TODO: find last node
        TODO: track previous node
