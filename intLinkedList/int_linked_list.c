@@ -38,21 +38,28 @@ IntLinkedList *int_linked_list_create(void)
 
 void int_linked_list_clear(IntLinkedList *list)
 {
-    (void)list;
-
-    /* TODO: iterate through nodes
-       TODO: free each node
-       TODO: reset head/tail/size
+    /* iterate through nodes
+       free each node
+       reset head/tail/size
     */
+    Node* temp;
+    int size = list->size;
+    for (int i = 0; i < size; i++){
+        temp = list->head;
+        list->head = list->head->next;
+        free(temp);
+        list->size -= 1;
+    }
+    list->tail = NULL;
 }
 
 void int_linked_list_destroy(IntLinkedList *list)
 {
-    (void)list;
-
-    /* TODO: clear list
-       TODO: free list
+    /* clear list
+       free list
     */
+    int_linked_list_clear(list);
+    free(list);
 }
 
 size_t int_linked_list_size(const IntLinkedList *list)
@@ -178,20 +185,26 @@ bool int_linked_list_get(const IntLinkedList *list, size_t index, int *out_value
 bool int_linked_list_insert(IntLinkedList *list, size_t index, int value)
 {
     /*
-     * find index and 1 before index
+     * 1 before index
      * assign the newNode's next to index
      * assign 1 before's next to newNode
      * increment size
      */
+    // handle negative index
+    if (index < 0)
+        index = (list->size + index);
+    // check index out of range
     if (index >= list->size+1)
         return false;
     else{
         Node* newNode = node_create(value);
+        // inserting at the head
         if (index == 0){ 
             newNode->next = list->head;
             list->head = newNode;
             list->size++;
         }
+        // inserting at the tail
         else if (index == list->size-1){
             list->tail->next = newNode;
             list->tail = newNode;
@@ -214,18 +227,51 @@ bool int_linked_list_insert(IntLinkedList *list, size_t index, int value)
 
 bool int_linked_list_remove_at(IntLinkedList *list, size_t index, int *out_value)
 {
-    (void)list;
-    (void)index;
-    (void)out_value;
+    /*
+     * assign 1 before index's next to index next
+     * free the index duder
+     * decrement size
+     */
+    // handle negative index
+    if (index < 0)
+        index = (list->size + index);
+    // check index out of range
+    if (index >= list->size)
+        return false;
+    else {
+        // removing at the head
+        if (index == 0){
+            Node* temp = list->head;
+            list->head = list->head->next;
+            *out_value = temp->value;
+            free(temp);
+            list->size--;
+        // removing at the tail
+        } else if (index == list->size-1) {
+            Node* current = list->head;
+            for (int i = 0; i < index-1; i++)
+                current = current->next;
+            current->next = NULL;
+            *out_value = list->tail->value;
+            free(list->tail);
+            list->tail = current;
+            list->size--;
+        } else {
+            // pointer for index and the one before
+            Node* indexPtr = list->head;
+            Node* previous;
+            for (int i = 0; i < index; i++){
+                previous = indexPtr;
+                indexPtr = indexPtr->next;
+            }
+            // assigning the previous next to the one after the index
+            previous->next = indexPtr->next;
+            // assinging the out value and freeing the index
+            *out_value = indexPtr->value;
+            free(indexPtr);
+            list->size--;
+        }
+    }
 
-    /* TODO: validate index
-       TODO: handle front case
-       TODO: find previous node
-       TODO: unlink node
-       TODO: update tail if needed
-       TODO: free node
-       TODO: decrement size
-    */
-
-    return false;
+    return true;
 }
