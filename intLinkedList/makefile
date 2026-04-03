@@ -1,5 +1,7 @@
 run:
 	gcc "int_linked_list.c" "int_linked_list_test.c" -o ./bin/int_linked_list_test
+	gcc "int_linked_list.c" "int_linked_list_punishing_test.c" -o ./bin/int_linked_list_punishing_test
 
 clean:
 	rm -rf ./bin/int_linked_list_test
+	rm -rf ./bin/int_linked_list_punishing_test
