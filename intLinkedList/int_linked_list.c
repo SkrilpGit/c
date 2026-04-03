@@ -125,9 +125,6 @@ bool int_linked_list_pop_front(IntLinkedList *list, int *out_value)
 
 bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
 {
-    (void)list;
-    
-    (void)out_value;
     // check if empty
     if (list->size == 0)
         return false;
@@ -144,7 +141,7 @@ bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
     //start at 1 to line up with size, -1 for second last index 
     for (int i = 1; i < list->size-1; i++)
         secondLast = secondLast->next;
-    //printf("%lu, %lu \n", secondLast->value, list->tail->value);
+    //printf("%d, %d \n", secondLast->value, list->tail->value);
     //pop value
     *out_value = list->tail->value;
     //assign new tail
@@ -180,18 +177,39 @@ bool int_linked_list_get(const IntLinkedList *list, size_t index, int *out_value
 
 bool int_linked_list_insert(IntLinkedList *list, size_t index, int value)
 {
-    (void)list;
-    (void)index;
-    (void)value;
+    /*
+     * find index and 1 before index
+     * assign the newNode's next to index
+     * assign 1 before's next to newNode
+     * increment size
+     */
+    if (index >= list->size+1)
+        return false;
+    else{
+        Node* newNode = node_create(value);
+        if (index == 0){ 
+            newNode->next = list->head;
+            list->head = newNode;
+            list->size++;
+        }
+        else if (index == list->size-1){
+            list->tail->next = newNode;
+            list->tail = newNode;
+            list->size++;
+        }
+        else {
+            // find one before index
+            Node* current = list->head;
+            for (int i = 0; i < index-1; i++)
+                current = current->next;
+            // insert the new node
+            newNode->next = current->next;
+            current->next = newNode;
+            list->size++;
+        }
+    }
 
-    /* TODO: validate index
-       TODO: handle front/back cases
-       TODO: find previous node
-       TODO: insert new node
-       TODO: increment size
-    */
-
-    return false;
+    return true;
 }
 
 bool int_linked_list_remove_at(IntLinkedList *list, size_t index, int *out_value)
