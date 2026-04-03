@@ -178,6 +178,9 @@ bool int_linked_list_get(const IntLinkedList *list, size_t index, int *out_value
     if (list == NULL)
         return false;
     //printf("%lu %lu\n",index,list->size);
+    // handle negative index
+    if (index < 0)
+        index = (list->size + index);
     //bounds check
     if (index > list->size-1 || list->size == 0)
         return false;
