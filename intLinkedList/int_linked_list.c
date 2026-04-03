@@ -64,18 +64,24 @@ void int_linked_list_destroy(IntLinkedList *list)
 
 size_t int_linked_list_size(const IntLinkedList *list)
 {
+    if (list == NULL)
+        return false;
     /* return size */
     return list->size;
 }
 
 bool int_linked_list_is_empty(const IntLinkedList *list)
 {
+    if (list == NULL)
+        return false;
     /* return true if size == 0 */
     return (list->size == 0);
 }
 
 bool int_linked_list_push_front(IntLinkedList *list, int value)
 {
+    if (list == NULL)
+        return false;
     // Create node
     Node* newNode = node_create(value);
     newNode->next = list->head;
@@ -92,6 +98,8 @@ bool int_linked_list_push_front(IntLinkedList *list, int value)
 
 bool int_linked_list_push_back(IntLinkedList *list, int value)
 {
+    if (list == NULL)
+        return false;
     // create Node
     Node* newNode = node_create(value);
     // if list empty update head
@@ -109,6 +117,8 @@ bool int_linked_list_push_back(IntLinkedList *list, int value)
 
 bool int_linked_list_pop_front(IntLinkedList *list, int *out_value)
 {
+    if (list == NULL)
+        return false;
     // check empty
     if (list->size == 0)
         return false;
@@ -132,6 +142,8 @@ bool int_linked_list_pop_front(IntLinkedList *list, int *out_value)
 
 bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
 {
+    if (list == NULL)
+        return false;
     // check if empty
     if (list->size == 0)
         return false;
@@ -163,6 +175,8 @@ bool int_linked_list_pop_back(IntLinkedList *list, int *out_value)
 
 bool int_linked_list_get(const IntLinkedList *list, size_t index, int *out_value)
 {
+    if (list == NULL)
+        return false;
     //printf("%lu %lu\n",index,list->size);
     //bounds check
     if (index > list->size-1 || list->size == 0)
@@ -184,6 +198,8 @@ bool int_linked_list_get(const IntLinkedList *list, size_t index, int *out_value
 
 bool int_linked_list_insert(IntLinkedList *list, size_t index, int value)
 {
+    if (list == NULL)
+        return false;
     /*
      * 1 before index
      * assign the newNode's next to index
@@ -227,6 +243,8 @@ bool int_linked_list_insert(IntLinkedList *list, size_t index, int value)
 
 bool int_linked_list_remove_at(IntLinkedList *list, size_t index, int *out_value)
 {
+    if (list == NULL)
+        return false;
     /*
      * assign 1 before index's next to index next
      * free the index duder
