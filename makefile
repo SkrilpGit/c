@@ -5,6 +5,7 @@ run:
 	gcc "in_to_out_chars.c" -o ./bin/in_to_out_chars
 	gcc "deci_binary.c" -o ./bin/deci_binary
 	gcc "sort_int_by_bits.c" -o ./bin/sort_int_by_bits
+	gcc "-I./intList" "./intList/int_list.c" "remove_odd.c" -o ./bin/remove_odd
 clean:
 	rm -rf ./bin/cel_to_fahr
 	rm -rf ./bin/fahrenheit_to_celsius
