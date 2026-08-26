@@ -8,10 +8,13 @@
 extern "C" {
 #endif
 
-/*
- * Opaque type
- */
-typedef struct IntList IntList;
+// normal type bruh
+
+typedef struct IntList {
+    int *data;
+    size_t size;
+    size_t capacity;
+}IntList;
 
 /*
  * Creation / Destruction

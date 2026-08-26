@@ -4,12 +4,6 @@
 #include <string.h>
 #include <stdio.h>
 
-struct IntList {
-    int *data;
-    size_t size;
-    size_t capacity;
-};
-
 
 /* ---------- Internal Helpers ---------- */
 
