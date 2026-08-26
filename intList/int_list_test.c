@@ -38,7 +38,7 @@ int main(void) {
     // Pop back
     assert(int_list_pop_back(list, &value));
     printf("Popped back: %d\n", value); // Should print 25
-
+    
     // Clear list
     int_list_clear(list);
     assert(int_list_size(list) == 0);
@@ -46,6 +46,15 @@ int main(void) {
 
     // Destroy list
     int_list_destroy(list);
+
+    // Create list from existing array
+    int arr[] = {20,15,10,5,0};
+    list = int_list_from(arr,5);
+    assert(int_list_get(list,1,&value));
+    assert(value == 15);
+    int_list_get(list,4,&value);
+    assert(value == 0);
+    printf("Created list from array.\n");
 
     printf("All tests passed!\n");
     return 0;

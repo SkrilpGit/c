@@ -23,6 +23,9 @@ typedef struct IntList {
 /* Create a new list with an initial capacity */
 IntList *int_list_create(size_t initial_capacity);
 
+/* Create a new list from an existing array */
+IntList *int_list_from(int* array, size_t initial_capacity);
+
 /* Free all memory associated with the list */
 void int_list_destroy(IntList *list);
 

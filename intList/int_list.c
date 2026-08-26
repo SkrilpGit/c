@@ -35,8 +35,19 @@ IntList *int_list_create(size_t initial_capacity)
     return list;
 }
 
+IntList *int_list_from(int* array, size_t size)
+{
+    IntList* list = malloc(sizeof(IntList));
+    list->data = malloc(sizeof(int)*size);
+    list->data = array;
+    list->capacity = size;
+    list->size = size;
+
+    return list;
+}
+
 void int_list_destroy(IntList *list)
-{ 
+{
     free(list->data);
     free(list);
 }
