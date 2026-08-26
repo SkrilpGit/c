@@ -1,7 +1,9 @@
+#include <stdio.h>
 #include "int_list.h"
 
 int main() {
     struct IntList *list = int_list_create(4);
+    int value;
     int_list_push_back(list,1);
     int_list_push_back(list,2);
     int_list_push_back(list,3);
@@ -11,11 +13,11 @@ int main() {
 
     for (int i = 0; i < list->size; i++) {
         if (list->data[i] % 2 == 1){
-            int_list_remove_at(list,i);
+            int_list_remove_at(list,i,&value);
             len -= 1;
         }
     }
-    printList(list);
+    printf("size of list == %ld\n",list->size);
 
 }
 
