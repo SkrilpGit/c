@@ -1,7 +1,7 @@
 #include "int_list.h"
 
 int main() {
-    IntList *list = int_list_create(4);
+    struct IntList *list = int_list_create(4);
     int_list_push_back(list,1);
     int_list_push_back(list,2);
     int_list_push_back(list,3);
@@ -16,5 +16,6 @@ int main() {
         }
     }
     printList(list);
-    
+
 }
+
