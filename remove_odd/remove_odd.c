@@ -2,7 +2,7 @@
 #include "../intList/int_list.h"
 
 int main() {
-    int arr[] = {1,2,3,4};
+    int arr[] = {1,3,4,5};
     struct IntList *list = int_list_from(arr,4);
 
     int value;
@@ -10,6 +10,7 @@ int main() {
     for (int i = 0; i < list->size; i++) {
         if (list->data[i] % 2 == 1){
             int_list_remove_at(list,i,&value);
+            i--;
         }
     }
 
