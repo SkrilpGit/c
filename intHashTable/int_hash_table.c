@@ -39,7 +39,7 @@ char* input(int max_size, int* size){
 
     printf("temp = %s, size = %d\n",temp, i);
     char* in = malloc((i)*sizeof(char));
-    memcpy(in,temp,sizeof(temp));
+    memcpy(in,temp,i*sizeof(char));
     return in;
 }
 
@@ -72,7 +72,9 @@ int main() {
     printf("input the value: ");
     int value_size = 0;
     char* svalue = input(32, &value_size);
-    printf("svalue = %s\n", svalue);
+    printf("svalue = %s\n",svalue);
     value = get_int(svalue,value_size);
     printf("value = %d\n", value);
+    free(svalue);
+
 }
