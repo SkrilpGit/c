@@ -2,16 +2,6 @@
 
 #include <stdio.h>
 
-// IntList *int_list_create(size_t initial_capacity)
-// {
-//     IntList* list = malloc(sizeof(IntList));
-//     list->data = malloc(sizeof(int)*initial_capacity);
-//     (*list).capacity = initial_capacity;
-//     list->capacity = initial_capacity;
-//     list->size = 0;
-//
-//     return list;
-// }
 IntHashTable *int_hash_table_create(size_t size){
     IntHashTable* table = malloc(sizeof(IntHashTable));
     table->data = malloc(sizeof(int64_t)*size);
@@ -20,11 +10,13 @@ IntHashTable *int_hash_table_create(size_t size){
     return table;
 }
 
-int hash(char* key, int key_size, int size) {
+int hash(char* key, int size) {
     int out = 0;
+    char* c = key;
 
-    for (int c = 0; c < key_size; c++){
-        out += key[c];
+    while (c != 0){
+        out += *c;
+        c += 1;
     }
 
     // printf("%d index\n",out);
@@ -35,7 +27,7 @@ int hash(char* key, int key_size, int size) {
 
 void add_key_value(IntHashTable *table, int table_size, char* key,
         int key_size, int64_t value){
-    int i = hash(key,key_size,table_size);
+    int i = hash(key,table_size);
     table->data[i] = value;
 }
 
