@@ -20,16 +20,12 @@ char* input(int max_size){
         c = getchar();
         size++;
     }
-    printf("size = %d\n",size);
 
     if (size > max_size-1 && c != '\n')
         flush_in();
 
-    char* in = malloc((size+1)*sizeof(char));
+    char* in = malloc((size)*sizeof(char));
     memcpy(in,temp,(size)*sizeof(char));
-    in[size] = 0;
-
-    printf("input = %s\n",in);
 
     return in;
 }
@@ -40,7 +36,6 @@ int get_int(char* word){
     while (*c != '\0'){
         num *= 10;
         num += *c - 48;
-        printf("%d",num);
         c += 1;
     };
     return num;
