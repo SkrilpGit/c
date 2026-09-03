@@ -50,8 +50,9 @@ int get_int(char* word, int size){
     return (int)(num*exp);
 }
 
-void add_user_in(IntHashTable *table, int size){
+void add_user_in(IntHashTable *table){
 
+    size_t size = table->size;
     char* key;
     int64_t value;
 
@@ -65,17 +66,17 @@ void add_user_in(IntHashTable *table, int size){
     value = get_int(svalue,value_size);
     free(svalue);
 
-    add_key_value(table, size, key, key_size, value);
+    add_key_value(table, key, value);
     free(key);
 }
 
 int main() {
     IntHashTable *table = int_hash_table_create(16);
     
-    add_key_value(table,16,"hi",2,42);
+    add_key_value(table,"hi",42);
 
-    add_user_in(table,16);
+    add_user_in(table);
 
-    display_table(table,16);
+    display_table(table);
 }
 

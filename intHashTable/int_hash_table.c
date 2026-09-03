@@ -14,7 +14,7 @@ int hash(char* key, int size) {
     int out = 0;
     char* c = key;
 
-    while (c != 0){
+    while (*c != '\0'){
         out += *c;
         c += 1;
     }
@@ -25,13 +25,13 @@ int hash(char* key, int size) {
 }
 
 
-void add_key_value(IntHashTable *table, int table_size, char* key,
-        int key_size, int64_t value){
-    int i = hash(key,table_size);
+void add_key_value(IntHashTable *table, char* key, int64_t value){
+    int i = hash(key,table->size);
     table->data[i] = value;
 }
 
-void display_table(IntHashTable *table, int size){
+void display_table(IntHashTable *table){
+    size_t size = table->size;
     for(int i = 0; i < size; i++){
         printf("%d: %d,\n",i,table->data[i]);
     }
