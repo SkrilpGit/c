@@ -1,10 +1,11 @@
 #include "int_hash_table.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 IntHashTable *int_hash_table_create(size_t size){
     IntHashTable* table = malloc(sizeof(IntHashTable));
-    table->data = malloc(sizeof(int64_t)*size);
+    table->data = malloc(sizeof(int)*size);
     table->size = size;
 
     return table;
@@ -25,9 +26,13 @@ int hash(char* key, int size) {
 }
 
 
-void add_key_value(IntHashTable *table, char* key, int64_t value){
+void insert(IntHashTable *table, char* key, int value){
     int i = hash(key,table->size);
     table->data[i] = value;
+}
+
+int get(IntHashTable *table, char* key){
+    return table->data[hash(key,table->size)];
 }
 
 void display_table(IntHashTable *table){
