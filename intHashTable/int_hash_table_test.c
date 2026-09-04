@@ -14,7 +14,7 @@ char* input(int max_size){
     int size = 0;
     int c = getchar();
     while(c != '\n'){
-        if (size > max_size-1)
+        if (size >= max_size)
             break;
         temp[size] = c;
         c = getchar();
@@ -41,32 +41,32 @@ int get_int(char* word){
     return num;
 }
 
-void add_user_in(IntHashTable *table){
-
-    size_t size = table->size;
-    char* key;
-    int value;
-
-    printf("input the key: ");
-    key = input(32); // need free
-
-    printf("input the value: ");
-    char* svalue = input(sizeof(int));
-    // value = -1;
-    value = get_int(svalue);
-    free(svalue);
-
-    insert(table, key, value);
-    free(key);
-}
-
 int main() {
     IntHashTable *table = int_hash_table_create(16);
     
-    insert(table,"hi",42);
+    table_insert(table,"hi",42);
 
-    add_user_in(table);
+    char* key;
+    char* svalue;
+    int value;
 
+    printf("input the key: ");
+    key = input(32); //TODO free
+
+    printf("input the value: ");
+    svalue = input(sizeof(int)); //TODO free
+    value = get_int(svalue);
+
+    table_insert(table,key,value);
+
+    printf("get value from key: ");
+    free(key);
+    key = input(32); //TODO free
+    value = table_get(table,key);
+    printf("Your value is %d\n",value);
     display_table(table);
+
+    free(key);
+    free(svalue);
 }
 

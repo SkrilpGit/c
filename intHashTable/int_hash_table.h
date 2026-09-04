@@ -10,9 +10,9 @@ typedef struct IntHashTable {
 
 IntHashTable *int_hash_table_create(size_t size);
 
-void insert(IntHashTable *table, char* key, int value);
+void table_insert(IntHashTable *table, char* key, int value);
 
-int get(IntHashTable *table, char* key);
+int table_get(IntHashTable *table, char* key);
 
 void display_table(IntHashTable *table);
 

@@ -20,18 +20,16 @@ int hash(char* key, int size) {
         c += 1;
     }
 
-    // printf("%d index\n",out);
-
     return out % size;
 }
 
 
-void insert(IntHashTable *table, char* key, int value){
+void table_insert(IntHashTable *table, char* key, int value){
     int i = hash(key,table->size);
     table->data[i] = value;
 }
 
-int get(IntHashTable *table, char* key){
+int table_get(IntHashTable *table, char* key){
     return table->data[hash(key,table->size)];
 }
 
